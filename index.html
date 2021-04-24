@@ -32,7 +32,8 @@
       border: 2px solid white;
       cursor: pointer;
       color: white;
-      background: #222;
+      background: rgba(0, 0, 0, 0.7);
+      border-radius: 5px;
       font-weight: bold;
       margin: 0 15px;
     }
@@ -48,15 +49,33 @@
       position: absolute;
       top: 0;
     }
+    .rg-btn{
+      position: absolute;
+      right: 50px;
+    }
+
+    .rg-btn input {
+      position: relative;
+      top: 10px;
+    }
+
+    .le-btn {
+      position: absolute;
+      left: 50px;
+    } 
   </style>
 </head>
 <body>
     <div id="info">
+      <div class="le-btn">
         <button onclick="undoDraw()">Undo</button>
-        <input oninput="draw_color = this.value" type="color" class="color-picker">
         <input oninput="lineWidth = this.value" type="range" min="1" value="10" max="100" class="pen-range">
+      </div>
+        <div class="rg-btn">
         <button id="display">Display</button>
         <button id="download">Download</button>
+        <input oninput="draw_color = this.value" type="color" class="color-picker">
+        </div>
     </div>
   <canvas>Sorry, your browser is too old for this demo.</canvas>
   <script src="main.js"></script>
