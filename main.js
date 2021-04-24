@@ -78,6 +78,8 @@ function drawOnCanvas (stroke) {
       let x, y;
       if(e.touches.length > 1) {
         undoDraw()
+      }else {
+        
       }
       if (e.touches && e.touches[0] && typeof e.touches[0]["force"] !== "undefined") {
         if (e.touches[0]["force"] > 0) {
