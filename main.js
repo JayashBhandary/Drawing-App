@@ -5,6 +5,7 @@ const context = canvas.getContext('2d')
 const display = document.getElementById('display')
 const download = document.getElementById('download');
 let lineWidth = 0
+let strokeWidth = 50
 let isMousedown = false
 let points = []
 
@@ -76,21 +77,16 @@ function drawOnCanvas (stroke) {
     canvas.addEventListener(ev, function (e) {
       let pressure = 0.1;
       let x, y;
-      if(e.touches.length > 1) {
-        undoDraw()
-      }else {
-        
-      }
       if (e.touches && e.touches[0] && typeof e.touches[0]["force"] !== "undefined") {
         if (e.touches[0]["force"] > 0) {
-          pressure = e.touches[0]["force"]
+          pressure = e.touches[0]["force"] * strokeWidth
         }
-        x = e.touches[0].pageX * 2
-        y = e.touches[0].pageY * 2
+        x = e.touches[0].pageX * 1
+        y = e.touches[0].pageY * 1
       } else {
-        pressure = 1.0
-        x = e.pageX * 2
-        y = e.pageY * 2
+        pressure = strokeWidth
+        x = e.pageX * 3
+        y = e.pageY * 3
       }
   
       isMousedown = true
@@ -101,6 +97,11 @@ function drawOnCanvas (stroke) {
       points.push({ x, y, lineWidth })
       drawOnCanvas(points)
     })
+    if(e.touches.length > 1) {
+      undoDraw()
+    }else {
+      
+    }
   }
   
   for (const ev of ['touchmove', 'mousemove']) {
@@ -112,18 +113,18 @@ function drawOnCanvas (stroke) {
       let x, y
       if (e.touches && e.touches[0] && typeof e.touches[0]["force"] !== "undefined") {
         if (e.touches[0]["force"] > 0) {
-          pressure = e.touches[0]["force"]
+          pressure = e.touches[0]["force"] * strokeWidth
         }
         x = e.touches[0].pageX * 2
         y = e.touches[0].pageY * 2
       } else {
-        pressure = 1.0
+        pressure = strokeWidth
         x = e.pageX * 2
         y = e.pageY * 2
       }
   
       // smoothen line width
-      lineWidth = (Math.log(pressure + 1) * 40 * 0.2 + lineWidth * 0.8)
+      lineWidth = (Math.log(pressure + 1) * 40 * 0.2 + strokeWidth * 0.8)
       points.push({ x, y, lineWidth })
   
       drawOnCanvas(points);
@@ -153,12 +154,12 @@ function drawOnCanvas (stroke) {
   
       if (e.touches && e.touches[0] && typeof e.touches[0]["force"] !== "undefined") {
         if (e.touches[0]["force"] > 0) {
-          pressure = e.touches[0]["force"]
+          pressure = e.touches[0]["force"] * strokeWidth
         }
         x = e.touches[0].pageX * 2
         y = e.touches[0].pageY * 2
       } else {
-        pressure = 1.0
+        pressure = strokeWidth
         x = e.pageX * 2
         y = e.pageY * 2
       }

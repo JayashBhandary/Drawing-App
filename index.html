@@ -102,11 +102,9 @@ button {
 }
 
 .pen-range::-webkit-slider-thumb {
-  -webkit-appearance: none;
   width: 35px;
   height: 35px;
   background: lightgray;
-  border-radius: 1px;
   border: none;
 }
 
@@ -176,7 +174,7 @@ button {
         </div>
     </div>
     <div class="ranger">
-      <input oninput="lineWidth = this.value" type="range" min="1" value="50" max="100" class="pen-range">
+      <input oninput="strokeWidth = this.value" type="range" min="1" value="50" max="100" class="pen-range">
       <input oninput="lineWidth = this.value" type="range" min="1" value="50" max="100" class="pen-range">
       <button onclick="undoDraw()" class="undo">U</button>
     </div>
