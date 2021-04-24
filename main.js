@@ -77,8 +77,7 @@ function drawOnCanvas (stroke) {
       let pressure = 0.1;
       let x, y;
       if(e.touches.length > 1) {
-        context.fillStyle = "orange";
-        context.fillRect(0, 0, canvas.width, canvas.height);
+        undoDraw()
       }
       if (e.touches && e.touches[0] && typeof e.touches[0]["force"] !== "undefined") {
         if (e.touches[0]["force"] > 0) {
