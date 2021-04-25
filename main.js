@@ -31,10 +31,10 @@ window.addEventListener('load', function(event){
 function drawOnCanvas (stroke) {
     context.strokeStyle = draw_color;
     context.lineCap = 'round'
-    context.lineJoin = 'square'
+    context.lineJoin = 'round'
   
     const l = stroke.length - 1
-    if (stroke.length >= 3) {
+    if (stroke.length >= 6) {
       const xc = (stroke[l].x + stroke[l - 1].x) / 2
       const yc = (stroke[l].y + stroke[l - 1].y) / 2
       context.lineWidth = stroke[l - 1].lineWidth
@@ -77,6 +77,11 @@ function drawOnCanvas (stroke) {
     canvas.addEventListener(ev, function (e) {
       let pressure = 0.1;
       let x, y;
+      if(e.touches.length > 1) {
+        undoDraw()
+      }else {
+        
+      }
       if (e.touches && e.touches[0] && typeof e.touches[0]["force"] !== "undefined") {
         if (e.touches[0]["force"] > 0) {
           pressure = e.touches[0]["force"] * strokeWidth
@@ -85,8 +90,8 @@ function drawOnCanvas (stroke) {
         y = e.touches[0].pageY * 1
       } else {
         pressure = strokeWidth
-        x = e.pageX * 3
-        y = e.pageY * 3
+        x = e.pageX * 1
+        y = e.pageY * 1
       }
   
       isMousedown = true
@@ -97,11 +102,6 @@ function drawOnCanvas (stroke) {
       points.push({ x, y, lineWidth })
       drawOnCanvas(points)
     })
-    if(e.touches.length > 1) {
-      undoDraw()
-    }else {
-      
-    }
   }
   
   for (const ev of ['touchmove', 'mousemove']) {
@@ -113,7 +113,7 @@ function drawOnCanvas (stroke) {
       let x, y
       if (e.touches && e.touches[0] && typeof e.touches[0]["force"] !== "undefined") {
         if (e.touches[0]["force"] > 0) {
-          pressure = e.touches[0]["force"] * strokeWidth
+          pressure = e.touches[0]["force"] * strokeWidth * lineWidth
         }
         x = e.touches[0].pageX * 2
         y = e.touches[0].pageY * 2
@@ -128,22 +128,7 @@ function drawOnCanvas (stroke) {
       points.push({ x, y, lineWidth })
   
       drawOnCanvas(points);
-  
-      requestIdleCallback(() => {
-        $force.textContent = 'force = ' + pressure
-  
-        const touch = e.touches ? e.touches[0] : null
-        if (touch) {
-          $touches.innerHTML = `
-            touchType = ${touch.touchType} ${touch.touchType === 'direct' ? '👆' : '✍️'} <br/>
-            radiusX = ${touch.radiusX} <br/>
-            radiusY = ${touch.radiusY} <br/>
-            rotationAngle = ${touch.rotationAngle} <br/>
-            altitudeAngle = ${touch.altitudeAngle} <br/>
-            azimuthAngle = ${touch.azimuthAngle} <br/>
-          `
-        }
-      })
+
     })
   }
   
